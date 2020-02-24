@@ -79,6 +79,7 @@ fi
 echo $new
 
 # set outputs
+echo ::set-output name=commits::$log
 echo ::set-output name=new_tag::$new
 echo ::set-output name=tag::$new
 
