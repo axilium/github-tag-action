@@ -33,6 +33,10 @@ commit=$(git rev-parse HEAD)
 if [ "$tag_commit" == "$commit" ]; then
     echo "No new commits since previous tag. Patching..."
     new=$(semver bump patch $tag)
+    if $with_v
+    then
+        new="v$new"
+    fi
     if $pre_release
     then
 	new="$new-${commit:0:7}"
