@@ -31,8 +31,14 @@ tag_commit=$(git rev-list -n 1 $tag)
 commit=$(git rev-parse HEAD)
 
 if [ "$tag_commit" == "$commit" ]; then
-    echo "No new commits since previous tag. Skipping..."
-    echo ::set-output name=tag::$tag
+    echo "No new commits since previous tag. Patching..."
+    new=$(semver bump patch $tag)
+    if $pre_release
+    then
+	new="$new-${commit:0:7}"
+    fi
+    echo $new
+    echo ::set-output name=tag::$new
     exit 0
 fi
 
