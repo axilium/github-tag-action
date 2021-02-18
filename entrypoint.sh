@@ -28,7 +28,6 @@ echo -e "\tINITIAL_VERSION: ${initial_version}"
 echo -e "\tTAG_CONTEXT: ${tag_context}"
 echo -e "\tPRERELEASE_SUFFIX: ${suffix}"
 echo -e "\tVERBOSE: ${verbose}"
-echo -e "\tDESIRED_MINOR: ${desired_minor}"
 
 current_branch=$(git rev-parse --abbrev-ref HEAD)
 
@@ -37,6 +36,7 @@ if [[ $current_branch =~ ^sprint_([0-9]+)$ ]]; then
   echo -e "This is a sprint ${sprint_num} branch"
   desired_minor=$sprint_num
 fi
+echo -e "\tDESIRED_MINOR: ${desired_minor}"
 
 pre_release="true"
 IFS=',' read -ra branch <<< "$release_branches"
@@ -97,15 +97,16 @@ then
   echo $log
 fi
 
+clear_tag=`echo $tag | cut -d'-' -f 1`
 case "$log" in
-    *#major* ) new=$(semver -i major $tag); part="major";;
-    *#minor* ) new=$(semver -i minor $tag); part="minor";;
-    *#patch* ) new=$(semver -i patch $tag); part="patch";;
+    *#major* ) new=$(semver -i major $clear_tag); part="major";;
+    *#minor* ) new=$(semver -i minor $clear_tag); part="minor";;
+    *#patch* ) new=$(semver -i patch $clear_tag); part="patch";;
     * )
         if [ "$default_semvar_bump" == "none" ]; then
             echo "Default bump was set to none. Skipping..."; exit 0
         else
-            new=$(semver -i "${default_semvar_bump}" $tag); part=$default_semvar_bump
+            new=$(semver -i "${default_semvar_bump}" $clear_tag); part=$default_semvar_bump
         fi
         ;;
 esac
