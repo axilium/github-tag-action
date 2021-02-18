@@ -9,8 +9,12 @@ outputs:
     description: 'Generated tag'
   tag:
     description: 'The latest tag after running this action'
+  part:
+    description: 'The part of version which was bumped'
   commits:
     description: 'This is the commit log with changes'
+  same-tag:
+    description: 'It is set to true if no new commits were found and not tag was generated'
 branding:
   icon: 'git-merge'  
   color: 'purple'
