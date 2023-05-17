@@ -42,7 +42,7 @@ if [ "$tag_commit" == "$commit" ]; then
 	new="$new-${commit:0:7}"
     fi
     echo $new
-    echo ::set-output name=tag::$new
+    echo "tag=${new}" >> $GITHUB_OUTPUT
     exit 0
 fi
 
@@ -89,9 +89,9 @@ fi
 echo $new
 
 # set outputs
-echo ::set-output name=commits::$log
-echo ::set-output name=new_tag::$new
-echo ::set-output name=tag::$new
+echo "commits=${log}" >> $GITHUB_OUTPUT
+echo "new_tag=${new}" >> $GITHUB_OUTPUT
+echo "tag=${new}" >> $GITHUB_OUTPUT
 
 if $pre_release
 then
