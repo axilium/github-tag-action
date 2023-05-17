@@ -86,8 +86,8 @@ echo -e "tag_commit: ${tag_commit}. \n\tcommit: ${commit}"
 
 if [ "$tag_commit" == "$commit" ]; then
     echo "No new commits since previous tag. Skipping..."
-    echo ::set-output name=tag::$tag
-    echo ::set-output name=same-tag::true
+    echo "tag=${tag}" >> $GITHUB_OUTPUT
+    echo "same-tag=true" >> $GITHUB_OUTPUT
     exit 0
 fi
 
@@ -146,19 +146,19 @@ else
 fi
 
 # set outputs
-echo ::set-output name=commits::$log
-echo ::set-output name=new_tag::$new
-echo ::set-output name=part::$part
-echo ::set-output name=same-tag::false
+echo "commits=${log}" >> $GITHUB_OUTPUT
+echo "new_tag=${new}" >> $GITHUB_OUTPUT
+echo "part=${part}" >> $GITHUB_OUTPUT
+echo "same-tag=false" >> $GITHUB_OUTPUT
 
 # use dry run to determine the next tag
 if $dryrun
 then
-    echo ::set-output name=tag::$tag
+    echo "tag=${tag}" >> $GITHUB_OUTPUT
     exit 0
 fi
 
-echo ::set-output name=tag::$new
+echo "tag=${new}" >> $GITHUB_OUTPUT
 
 # create local git tag
 git tag $new
