@@ -29,6 +29,10 @@ echo -e "\tTAG_CONTEXT: ${tag_context}"
 echo -e "\tPRERELEASE_SUFFIX: ${suffix}"
 echo -e "\tVERBOSE: ${verbose}"
 
+setOutput() {
+    echo "${1}=${2}" >> "${GITHUB_OUTPUT}"
+}
+
 current_branch=$(git rev-parse --abbrev-ref HEAD)
 
 if [[ $current_branch =~ ^sprint_([0-9]+)$ ]]; then
@@ -86,8 +90,8 @@ echo -e "tag_commit: ${tag_commit}. \n\tcommit: ${commit}"
 
 if [ "$tag_commit" == "$commit" ]; then
     echo "No new commits since previous tag. Skipping..."
-    echo "tag=${tag}" >> $GITHUB_OUTPUT
-    echo "same-tag=true" >> $GITHUB_OUTPUT
+    setOutput "tag" "$tag"
+    setOutput "same-tag" "true"
     exit 0
 fi
 
@@ -146,19 +150,19 @@ else
 fi
 
 # set outputs
-echo "commits=${log}" >> $GITHUB_OUTPUT
-echo "new_tag=${new}" >> $GITHUB_OUTPUT
-echo "part=${part}" >> $GITHUB_OUTPUT
-echo "same-tag=false" >> $GITHUB_OUTPUT
+setOutput "commits" "$log"
+setOutput "new_tag" "$new"
+setOutput "part" "$part"
+setOutput "same-tag" "false"
 
 # use dry run to determine the next tag
 if $dryrun
 then
-    echo "tag=${tag}" >> $GITHUB_OUTPUT
+    setOutput "tag" "$tag"
     exit 0
 fi
 
-echo "tag=${new}" >> $GITHUB_OUTPUT
+setOutput "tag" "$new"
 
 # create local git tag
 git tag $new
