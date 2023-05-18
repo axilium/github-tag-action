@@ -150,18 +150,24 @@ else
 fi
 
 # set outputs
+echo  "commits=log=$log"
 setOutput "commits" "$log"
+echo "new_tag=new=$new"
 setOutput "new_tag" "$new"
+echo "part=part=$part"
 setOutput "part" "$part"
+echo "same-tag=false"
 setOutput "same-tag" "false"
 
 # use dry run to determine the next tag
 if $dryrun
 then
+    echo "tag=tag=$tag"
     setOutput "tag" "$tag"
     exit 0
 fi
 
+echo "tag=new=$new"
 setOutput "tag" "$new"
 
 # create local git tag
