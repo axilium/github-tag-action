@@ -154,10 +154,10 @@ echo  "1commits=log=$log"
 log=$(echo $log | tr '\n' ' ')
 setOutput "commits" "$log"
 echo "2new_tag=new=$new"
-new=$(echo $new | tr '\n' ' ')
+#new=$(echo $new | tr '\n' '')
 setOutput "new_tag" "$new"
 echo "3part=part=$part"
-part=$(echo $part | tr '\n' ' ')
+#part=$(echo $part | tr '\n' '')
 setOutput "part" "$part"
 echo "4same-tag=false"
 setOutput "same-tag" "false"
@@ -166,14 +166,14 @@ setOutput "same-tag" "false"
 if $dryrun
 then
     echo "5tag=tag=$tag"
-    tag=$(echo $tag | tr '\n' ' ')
+#    tag=$(echo $tag | tr '\n' '')
     setOutput "tag" "$tag"
     echo "tag=tag->end"
     exit 0
 fi
 
 echo "tag=new=$new"
-tag=$(echo $tag | tr '\n' ' ')
+#tag=$(echo $tag | tr '\n' '')
 setOutput "tag" "$new"
 echo "tag=new->end"
 
