@@ -163,12 +163,16 @@ setOutput "same-tag" "false"
 if $dryrun
 then
     echo "tag=tag=$tag"
+    tag=$(echo $tag | tr '\n' ' ')
     setOutput "tag" "$tag"
+    echo "tag=tag->end"
     exit 0
 fi
 
 echo "tag=new=$new"
+tag=$(echo $tag | tr '\n' ' ')
 setOutput "tag" "$new"
+echo "tag=new->end"
 
 # create local git tag
 git tag $new
