@@ -150,19 +150,22 @@ else
 fi
 
 # set outputs
-echo  "commits=log=$log"
+echo  "1commits=log=$log"
+log=$(echo $log | tr '\n' ' ')
 setOutput "commits" "$log"
-echo "new_tag=new=$new"
+echo "2new_tag=new=$new"
+new=$(echo $new | tr '\n' ' ')
 setOutput "new_tag" "$new"
-echo "part=part=$part"
+echo "3part=part=$part"
+part=$(echo $part | tr '\n' ' ')
 setOutput "part" "$part"
-echo "same-tag=false"
+echo "4same-tag=false"
 setOutput "same-tag" "false"
 
 # use dry run to determine the next tag
 if $dryrun
 then
-    echo "tag=tag=$tag"
+    echo "5tag=tag=$tag"
     tag=$(echo $tag | tr '\n' ' ')
     setOutput "tag" "$tag"
     echo "tag=tag->end"
